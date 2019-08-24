@@ -1,0 +1,190 @@
+---
+title: "Manipulación de datos"
+subtitle: "⚔<br/>con dplyr"
+author: "Curso Aprender R desde cero"
+institute: "FACENA UNNE"
+date: "26 de Agosto de 2019"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+class: inverse, center, middle
+
+<img src="dplyr.png" width="20%" align="top" />
+
+# Ejercicios
+
+---
+
+<img src="dplyr.png" width="10%" align="right" />
+
+# Tener los paquetes cargados
+
+```{r gapminder, warning=FALSE, message=FALSE}
+library(dplyr) #<<
+library(magrittr) #<<
+library(gapminder) #<<
+```
+
+---
+
+<img src="dplyr.png" width="10%" align="right" />
+
+# 1. De gapminder seleccionar los datos correspondientes a Argentina. 
+
+
+```{r , warning=FALSE, echo=FALSE}
+gapminder %>%
+  filter(country=="Argentina") #<<
+```
+
+
+---
+<img src="dplyr.png" width="10%" align="right" />
+
+# Solución
+
+```{r , warning=FALSE}
+gapminder %>%
+  filter(country=="Argentina") #<<
+```
+
+---
+<img src="dplyr.png" width="10%" align="right" />
+
+# 2. Seleccionar las columnas correspondientes a ingresos per capita y esperanza de vida
+
+```{r , warning=FALSE, echo=FALSE}
+gapminder %>%
+  select(lifeExp, gdpPercap) 
+```
+---
+<img src="dplyr.png" width="10%" align="right" />
+
+# Solución 
+
+```{r , warning=FALSE}
+gapminder %>%
+  select(lifeExp, gdpPercap) #<<
+```
+
+
+---
+
+
+<img src="dplyr.png" width="10%" align="right" />
+
+# 3. Eliminar la columna correspondiente a la población en gapminder
+
+```{r , warning=FALSE, echo=FALSE}
+gapminder %>%
+  select(-pop)
+```
+
+
+---
+<img src="dplyr.png" width="10%" align="right" />
+
+# Solución 
+
+```{r , warning=FALSE}
+gapminder %>%
+  select(-pop) #<<
+```
+
+---
+
+<img src="dplyr.png" width="10%" align="right" />
+
+## 4. Seleccionar los datos correspondientes al continente americano, correspondientes del año 80 en adelante. Los datos deben estar ordenados según los años más actuales. 
+
+```{r , warning=FALSE, echo=FALSE}
+gapminder %>%
+  filter(continent=="Americas", year >= 1980) %>% 
+  arrange(desc(year))
+```
+
+---
+<img src="dplyr.png" width="10%" align="right" />
+
+# Solución
+```{r , warning=FALSE}
+gapminder %>%
+  filter(continent=="Americas", year >= 1980) %>% #<<
+  arrange(desc(year)) #<<
+```
+
+---
+<img src="dplyr.png" width="10%" align="right" />
+
+# 5. Calcular la media por continente del ingreso per cápita y la esperanza de vida. Ordenarlos de mayor a menor según la esperanza de vida.
+
+```{r , warning=FALSE, echo=FALSE}
+gapminder %>%
+  group_by(continent) %>%
+  summarize(gpd=mean(gdpPercap), lifeE=mean(lifeExp)) %>%
+  arrange(desc(lifeE))
+```
+
+
+---
+<img src="dplyr.png" width="10%" align="right" />
+
+# Solución
+
+```{r , warning=FALSE}
+gapminder %>%
+  group_by(continent) %>% #<<
+  summarize(gpd=mean(gdpPercap), lifeE=mean(lifeExp)) %>% #<<
+  arrange(desc(lifeE)) #<<
+```
+
+---
+<img src="dplyr.png" width="10%" align="right" />
+
+# 6. ¿Cuáles son los 7 países con mayor esperanza de vida en el año 2002?
+
+```{r , warning=FALSE, message=FALSE, echo=FALSE}
+gapminder %>%
+  filter(year==2002) %>%
+  arrange(desc(lifeExp)) %>%
+  head(7)
+```
+
+---
+<img src="dplyr.png" width="10%" align="right" />
+
+# Solución 
+
+```{r , warning=FALSE, message=FALSE}
+gapminder %>%
+  filter(year==2002) %>% #<<
+  arrange(desc(lifeExp)) %>% #<<
+  top_n(7, lifeExp) #<<
+```
+---
+
+<img src="dplyr.png" width="10%" align="right" />
+
+# Para seguir practicando...
+
+https://garthtarr.github.io/meatR/dplyr_ex1.html
+
+### R4DS Capítulo 5: Data Transformation
+
+https://r4ds.had.co.nz/transform.html
+
+### R4DS Capítulo 5 (en español)
+
+https://es.r4ds.hadley.nz/transform.html 
+
+### Soluciones (en inglés)
+
+https://jrnold.github.io/r4ds-exercise-solutions/transform.html 
+
+
